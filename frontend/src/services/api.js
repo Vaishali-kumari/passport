@@ -4,7 +4,9 @@ import axios from 'axios';
 // In development, Vite proxy handles /api → localhost:5000.
 const BASE_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`
-  : '/api';
+  : import.meta.env.DEV
+    ? '/api'
+    : 'https://passport-3.onrender.com/api';
 
 const api = axios.create({
   baseURL: BASE_URL,
