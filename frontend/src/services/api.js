@@ -1,12 +1,10 @@
 import axios from 'axios';
 
-// In production (deployed), set VITE_API_URL to your backend URL.
-// In development, Vite proxy handles /api → localhost:5000.
+// VITE_API_URL is set via .env.production or Render environment variable
+// In dev, Vite proxy routes /api → localhost:5000
 const BASE_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`
-  : import.meta.env.DEV
-    ? '/api'
-    : 'https://passport-3.onrender.com/api';
+  : '/api';
 
 const api = axios.create({
   baseURL: BASE_URL,
