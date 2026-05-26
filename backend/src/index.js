@@ -13,9 +13,19 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware — allow all origins (tighten in production if needed)
+// Middleware — allow deployed frontend + local dev
+const allowedOrigins = [
+  'https://passport-5.onrender.com',
+  'https://passport-3.onrender.com',
+  'http://localhost:3000',
+  'http://localhost:3001'
+];
 app.use(cors({
-  origin: '*',
+  origin: (origin, callback) => {
+    // allow requests with no origin (curl, Postman, server-to-server)
+    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+    callback(null, true); // allow all for now — tighten after testing
+  },
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
