@@ -1,0 +1,167 @@
+{
+  "info": {
+    "name": "Passport Dashboard API",
+    "description": "API collection for the Passport Social Media Scraper Dashboard",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health",
+        "description": "Check if the server is running"
+      }
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "Get All Posts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/posts?page=1&limit=20&sortBy=time&order=desc",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "20" },
+                { "key": "sortBy", "value": "time", "description": "time | engagement | likes" },
+                { "key": "order", "value": "desc", "description": "asc | desc" },
+                { "key": "platform", "value": "", "disabled": true },
+                { "key": "region", "value": "", "disabled": true },
+                { "key": "language", "value": "", "disabled": true },
+                { "key": "category", "value": "", "disabled": true },
+                { "key": "sentiment", "value": "", "disabled": true },
+                { "key": "search", "value": "", "disabled": true },
+                { "key": "clustered", "value": "false", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Posts - Filtered by Platform",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/posts?platform=Reddit&sortBy=engagement&order=desc"
+          }
+        },
+        {
+          "name": "Get Posts - Clustered View",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/posts?clustered=true&sortBy=time"
+          }
+        },
+        {
+          "name": "Get Posts - Search",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/posts?search=tatkal&sortBy=engagement"
+          }
+        },
+        {
+          "name": "Get Single Post",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/posts/POST_ID_HERE",
+            "description": "Replace POST_ID_HERE with an actual post ID"
+          }
+        },
+        {
+          "name": "Get Cluster Summary",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/posts/clusters/summary"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Translation",
+      "item": [
+        {
+          "name": "Get Supported Languages",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/translate/languages"
+          }
+        },
+        {
+          "name": "Translate Post",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/translate",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"postId\": \"POST_ID_HERE\",\n  \"targetLang\": \"hi\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Translate Text",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/translate",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"My passport renewal took 3 months\",\n  \"targetLang\": \"hi\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Scrape",
+      "item": [
+        {
+          "name": "Trigger Manual Scrape",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/scrape/trigger",
+            "description": "Triggers a background scrape. Returns immediately."
+          }
+        },
+        {
+          "name": "Get Scrape Status",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/scrape/status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Export",
+      "item": [
+        {
+          "name": "Export CSV (All Posts)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/export/csv"
+          }
+        },
+        {
+          "name": "Export CSV (Filtered)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/export/csv?platform=Reddit&category=Tatkal"
+          }
+        },
+        {
+          "name": "Export PDF",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/export/pdf"
+          }
+        }
+      ]
+    }
+  ]
+}
