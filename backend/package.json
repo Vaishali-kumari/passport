@@ -4,6 +4,7 @@
   "description": "Backend API for Passport Social Media Scraper Dashboard",
   "main": "src/index.js",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"

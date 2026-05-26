@@ -1,7 +1,13 @@
 import axios from 'axios';
 
+// In production (deployed), set VITE_API_URL to your backend URL.
+// In development, Vite proxy handles /api → localhost:5000.
+const BASE_URL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: BASE_URL,
   timeout: 30000
 });
 
@@ -34,12 +40,12 @@ export const fetchScrapeStatus = () =>
 
 export const exportCSV = (params = {}) => {
   const query = new URLSearchParams(params).toString();
-  window.open(`/api/export/csv?${query}`, '_blank');
+  window.open(`${BASE_URL}/export/csv?${query}`, '_blank');
 };
 
 export const exportPDF = (params = {}) => {
   const query = new URLSearchParams(params).toString();
-  window.open(`/api/export/pdf?${query}`, '_blank');
+  window.open(`${BASE_URL}/export/pdf?${query}`, '_blank');
 };
 
 export default api;
